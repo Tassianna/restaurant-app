@@ -28,6 +28,8 @@ services:
       context: ./backend/auth
       dockerfile: Dockerfile
     container_name: auth
+    ports:
+      - "3001:3001"
     networks:
       - backend
 
