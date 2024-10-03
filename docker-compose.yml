@@ -36,6 +36,8 @@ services:
       context: ./backend/items
       dockerfile: Dockerfile
     container_name: items
+    ports:
+      - "3003:3003"
     networks:
       - backend
 
@@ -44,6 +46,8 @@ services:
       context: ./backend/discounts
       dockerfile: Dockerfile
     container_name: discount
+    ports:
+      - "3002:3002"
     networks:
       - backend
 
