@@ -21,6 +21,7 @@ require("./config")(app);
 
 app.get("/api/discounts", (req, res, next) => {
     res.json("Discounts Server UP!");
+    console.log(`Discounts Server UP!`);
 });
 
 const CouponRoutes = require("./routes/coupons.routes");
