@@ -1,8 +1,9 @@
 client/node_modules
 mobile/node_modules
-server/node_modules
+backend/node_modules
+.env
 client/.env
 mobile/.env
-server/.env
+backend/.env
 mobile/.expo
 .env
