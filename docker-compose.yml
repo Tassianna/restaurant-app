@@ -1,43 +1,49 @@
 version: "3.7"
 
 services:
-  client:
+
+  haproxy:
+    image: haproxy:latest
+    container_name: haproxy
+    ports:
+      - 80:80
+    volumes: 
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg  # Path to HAProxy config
+    networks:
+      - frontend
+      - backend
+
+  frontend1:
     build:
       context: ./client
       dockerfile: Dockerfile
     container_name: client
     ports:
-      - 80:80
+      - 3000:80
     networks:
       - frontend
 
-  auth:
-    build:
-      context: ./backend/auth
-      dockerfile: Dockerfile
-    container_name: auth
-    ports:
-      - 81:80
-    networks:
-      - backend
+  # auth1:
+  #   build:
+  #     context: ./backend/auth
+  #     dockerfile: Dockerfile
+  #   container_name: auth
+  #   networks:
+  #     - backend
 
-  items:
+  items1:
     build:
       context: ./backend/items
       dockerfile: Dockerfile
     container_name: items
-    ports:
-      - 82:80
     networks:
       - backend
 
-  discount:
+  discounts1:
     build:
       context: ./backend/discounts
       dockerfile: Dockerfile
     container_name: discount
-    ports:
-      - 83:80
     networks:
       - backend
 
