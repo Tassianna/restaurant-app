@@ -5,3 +5,4 @@ client/.env
 mobile/.env
 server/.env
 mobile/.expo
+.env
