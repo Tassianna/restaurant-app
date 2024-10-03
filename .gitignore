@@ -7,3 +7,6 @@ mobile/.env
 backend/.env
 mobile/.expo
 .env
+
+
+**/node_modules/**
