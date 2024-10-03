@@ -1,0 +1,49 @@
+version: "3.7"
+
+services:
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: client
+    ports:
+      - 80:80
+    networks:
+      - frontend
+
+  auth:
+    build:
+      context: ./backend/auth
+      dockerfile: Dockerfile
+    container_name: auth
+    ports:
+      - 81:80
+    networks:
+      - backend
+
+  items:
+    build:
+      context: ./backend/items
+      dockerfile: Dockerfile
+    container_name: items
+    ports:
+      - 82:80
+    networks:
+      - backend
+
+  discount:
+    build:
+      context: ./backend/discounts
+      dockerfile: Dockerfile
+    container_name: discount
+    ports:
+      - 83:80
+    networks:
+      - backend
+
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
