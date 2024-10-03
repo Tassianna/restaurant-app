@@ -23,13 +23,13 @@ services:
     networks:
       - frontend
 
-  # auth1:
-  #   build:
-  #     context: ./backend/auth
-  #     dockerfile: Dockerfile
-  #   container_name: auth
-  #   networks:
-  #     - backend
+  auth1:
+    build:
+      context: ./backend/auth
+      dockerfile: Dockerfile
+    container_name: auth
+    networks:
+      - backend
 
   items1:
     build:
