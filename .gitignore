@@ -6,3 +6,4 @@ client/.env
 mobile/.env
 backend/.env
 mobile/.expo
+.env
