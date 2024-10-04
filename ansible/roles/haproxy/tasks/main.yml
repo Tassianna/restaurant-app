@@ -18,6 +18,11 @@
     src: "../templates/docker-compose.yml"
     dest: "~/restaurant-app/docker-compose.yml"
 
+- name: Copy Docker haproxy file
+  copy:
+    src: "../templates/haproxy.tpl"
+    dest: "~/restaurant-app/haproxy.cfg"
+
 - name: Build and Compose containers
   docker_compose:
     project_src: ~/restautant-app
