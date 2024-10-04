@@ -27,24 +27,16 @@ variable "security_groups" {
       protocol    = string
       cidr_blocks = bool
     }))
-    egress = map(object({
-      from_port = number
-      to_port   = number
-      protocol  = string
-    }))
   }))
 }
 
 variable "route-associations" {
-  type = map(object({
-    subnet_id      = string
-    route_table_id = string
-  }))
+  type = map(bool)
 }
 variable "route-tables" {
   type = map(object({
     cidr_block = string
-    gateway_id = string
+    gateway_id = bool
   }))
 }
 

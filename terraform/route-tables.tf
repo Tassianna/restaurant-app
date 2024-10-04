@@ -3,7 +3,7 @@ resource "aws_route_table" "route_table" {
 
   route {
     cidr_block = each.value.cidr_block
-    gateway_id = each.value.gateway_id
+    gateway_id = each.value.gateway_id == true ? aws_internet_gateway.igw.id : aws_nat_gateway.nazgw.id
   }
 
   tags = {
@@ -14,9 +14,9 @@ resource "aws_route_table" "route_table" {
 }
 
 resource "aws_route_table_association" "route_association" {
-  subnet_id      = each.value.subnet_id
-  route_table_id = each.value.route_table_id
+  subnet_id      = aws_subnet.subnet[each.value == true ? "public_subnet" : "private_subnet"].id
+  route_table_id = aws_route_table.route_table[each.value == true ? "public_route_table" : "private_route_table"].id
 
-  for_each = var.route-tables
+  for_each = var.route-associations
 }
 
