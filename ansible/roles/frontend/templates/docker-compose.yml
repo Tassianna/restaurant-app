@@ -9,5 +9,3 @@ services:
     container_name: client
     ports:
       - 3000:80
-    networks:
-      - frontend

@@ -10,7 +10,7 @@
     repo: https://github.com/Tassianna/restaurant-app.git
     dest: /home/ubuntu/
     clone: yes
-  update: true
+    update: true
 
 - name: Replace docker-compose file
   template:
