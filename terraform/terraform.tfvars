@@ -59,6 +59,12 @@ security_groups = {
         protocol    = "tcp"
         to_port     = 22
       }
+      allow_http_traffic = {
+        from_port   = 80
+        to_port     = 80
+        protocol    = "tcp"
+        cidr_blocks = false
+      }
     }
   }
 }
