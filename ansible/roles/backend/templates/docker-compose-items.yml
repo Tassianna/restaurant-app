@@ -1,0 +1,11 @@
+version: "3.7"
+
+services:
+
+  items1:
+    build:
+      context: ./backend/items
+      dockerfile: Dockerfile
+    container_name: items
+    ports:
+      - "3003:3003"

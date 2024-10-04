@@ -1,0 +1,10 @@
+version: "3.7"
+
+services:
+  auth1:
+    build:
+      context: ./backend/auth
+      dockerfile: Dockerfile
+    container_name: auth
+    ports:
+      - "3001:3001"
