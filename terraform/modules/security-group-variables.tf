@@ -1,12 +1,3 @@
-variable "public_sg_name" {
-    type = string
-}
-variable "private_sg_name" {
-    type = string
-}
-variable "private_sg_name" {
-    type = string
-}
 
 variable "security_groups" {
     type = map(object({
