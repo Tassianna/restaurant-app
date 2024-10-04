@@ -1,12 +1,12 @@
 
 [frontend]
-client ansibe_host= ansible_user=ubuntu ansible_ssh_private_key_file=<key path>
+frontend ansibe_host=private_ip ansible_user=ubuntu ansible_ssh_private_key_file=<key path>
 
 [backend]
-items ansibe_host= ansible_user=ubuntu ansible_ssh_private_key_file=<key path>
-auth ansibe_host= ansible_user=ubuntu ansible_ssh_private_key_file=<key path>
-discounts ansibe_host= ansible_user=ubuntu ansible_ssh_private_key_file=<key path>
+items ansibe_host=private_ip ansible_user=ubuntu ansible_ssh_private_key_file=<key path>
+auth ansibe_host=private_ip ansible_user=ubuntu ansible_ssh_private_key_file=<key path>
+discounts ansibe_host=private_ip ansible_user=ubuntu ansible_ssh_private_key_file=<key path>
 
 [haproxy]
-hap1 ansibe_host= ansible_user= ansible_ssh_private_key_file=<key path>
-hap2 ansibe_host= ansible_user= ansible_ssh_private_key_file=<key path>
+hap1 ansibe_host=public_ip ansible_user= ansible_ssh_private_key_file=<key path>
+

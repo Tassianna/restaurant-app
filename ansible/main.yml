@@ -1,0 +1,14 @@
+- host: haproxy
+  roles:
+    - haproxy
+  become: yes
+
+- host: frontend
+  roles:
+    - frontend
+  become: yes
+
+- hosts: backend
+  roles:
+    - backend
+  become: yes

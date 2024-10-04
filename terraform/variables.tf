@@ -47,6 +47,7 @@ variable "instances"{
         vpc_security_group          = bool
         subnet                      = string
         associate_public_ip_address = bool
+        user_data                   = string
     }))
 }
 

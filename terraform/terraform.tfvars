@@ -94,6 +94,11 @@ instances = {
         vpc_security_group          = true
         subnet                      = "public_subnet"
         associate_public_ip_address = true
+        user_data                   = <<-EOF
+        #!/bin/bash
+        sudo apt update -y
+        sudo apt install ansible -y
+        EOF
     }
 
     frontend = {
@@ -101,6 +106,7 @@ instances = {
         vpc_security_group          = false
         subnet                      = "private_subnet"
         associate_public_ip_address = false
+        user_data                   = ""
     }
 
     auth_service = {
@@ -108,6 +114,7 @@ instances = {
         vpc_security_group          = false
         subnet                      = "private_subnet"
         associate_public_ip_address = false
+        user_data                   = ""
     }
 
     discounts_service = {
@@ -115,6 +122,7 @@ instances = {
         vpc_security_group          = false
         subnet                      = "private_subnet"
         associate_public_ip_address = false
+        user_data                   = ""
     }
 
     items_service = {
@@ -122,6 +130,7 @@ instances = {
         vpc_security_group          = false
         subnet                      = "private_subnet"
         associate_public_ip_address = false
+        user_data                   = ""
     }
 
     haproxy_1 = {
@@ -129,6 +138,7 @@ instances = {
         vpc_security_group          = true
         subnet                      = "public_subnet"
         associate_public_ip_address = true
+        user_data                   = ""
     }
     
     haproxy_2 = {
@@ -136,6 +146,7 @@ instances = {
         vpc_security_group          = true
         subnet                      = "public_subnet"
         associate_public_ip_address = true
+        user_data                   = ""
     }
     
     lb = {
@@ -143,6 +154,7 @@ instances = {
         vpc_security_group          = true
         subnet                      = "public_subnet"
         associate_public_ip_address = true
+        user_data                   = ""
     }
 }
 
