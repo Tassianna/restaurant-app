@@ -18,5 +18,6 @@
     dest: "~/restaurant-app/docker-compose.yml"
 
 - name: Build and Compose containers
-  community.docker.docker_compose:
+  docker_compose:
     project_src: ~/restautant-app
+    state: present
