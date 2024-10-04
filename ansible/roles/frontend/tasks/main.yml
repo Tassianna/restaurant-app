@@ -1,0 +1,23 @@
+- name: Install docker
+  apt:
+    name: "{{ packages }}"
+    state: present
+    update_cache: yes
+  become: true
+
+- name: Clone GitHub repo
+  git:
+    repo: https://github.com/Tassianna/restaurant-app.git
+    dest: /home/ubuntu/
+    clone: yes
+  update: true
+
+- name: Replace docker-compose file
+  template:
+    src: ../templates/docker-compose.yml
+    dest: /home/ubuntu/restaurant-app/docker-compose.yml
+
+- name: Run docker-compose up
+  docker_compose:
+    project_src: /home/ubuntu/restaurant-app/
+    state: present
