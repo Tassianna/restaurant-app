@@ -1,3 +1,7 @@
+
+cidr_block = "10.0.0.0/16"
+vpc_name = "Tassi & Graces Project VPC"
+
 subnets = {
   public_subnet = {
 
@@ -21,54 +25,40 @@ subnets = {
 
 security_groups = {
   public-security-group = {
-    desc   = "security group for public subnet"
+    desc = "security group for public subnet"
     ingress = {
       allow_http_traffic = {
         from_port   = 80
         to_port     = 80
         protocol    = "tcp"
-        cidr_blocks = ["0.0.0.0/0"]
+        cidr_blocks = true
       }
 
       allow_ssh_traffic = {
         from_port   = 22
         to_port     = 22
         protocol    = "tcp"
-        cidr_blocks = ["0.0.0.0/0"]
+        cidr_blocks = true
       }
 
       allow_https_traffic = {
         from_port   = 443
         to_port     = 443
         protocol    = "tcp"
-        cidr_blocks = ["0.0.0.0/0"]
+        cidr_blocks = true
       }
-    }
-
-    egress = {
-      cidr_blocks = ["0.0.0.0/0"]
-      from_port   = 0
-      protocol    = "-1"
-      to_port     = 0
     }
   }
 
   private-security-group = {
-    desc   = "security group for public subnet"
+    desc = "security group for public subnet"
     ingress = {
       allow_ssh_traffic = {
-        cidr_blocks = [aws_subnet.subnet["public_subnet"].cidr_block]
+        cidr_blocks = false
         from_port   = 22
         protocol    = "tcp"
         to_port     = 22
       }
-    }
-
-    egress = {
-      cidr_blocks = ["0.0.0.0/0"]
-      from_port   = 0
-      protocol    = "-1"
-      to_port     = 0
     }
   }
 }
@@ -76,21 +66,15 @@ security_groups = {
 route-tables = {
   public_route_table = {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.igw.id
+    gateway_id = true
   }
   private_route_table = {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.ngw.id
+    gateway_id = false
   }
 }
 
 route-associations = {
-  public-association = {
-    subnet_id      = aws_subnet.subnet["public_subnet"].id
-    route_table_id = aws_route_table.route_table["public_route_table"].id
-  }
-  private-association = {
-    subnet_id      = aws_subnet.subnet["private_subnet"].id
-    route_table_id = aws_route_table.route_table["private_route_table"].id
-  }
+  public-association = true
+  private-association = false
 }
