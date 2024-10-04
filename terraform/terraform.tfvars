@@ -1,70 +1,25 @@
-# definition of variables to be used in resources and modules
+subnets = {
+ public_subnet = {
 
-variable "cidr_block" {
-    type = string
+   cidr_block = "10.0.1.0/24"
+
+   map_public_ip_on_launch = true
+
+   availability_zone = "eu-west-2a"
+
+ }
+
+ private_subnet = {
+
+   cidr_block = "10.0.2.0/24"
+
+   map_public_ip_on_launch = false
+
+   availability_zone = "eu-west-2b"
+ }
 }
-
-variable "vpc_name"{
-    type = string
-}
-
-variable "subnets"{
-    type = map(object({
-    cidr_block = string
-
-    map_public_ip_on_launch = bool
-
-    availability_zone = string
-  }))
-}
-
-###################this is how the subnets should look like:#########################
-###subnets = {
-#  public_subnet = {
-
-#    cidr_block = "10.0.1.0/24"
-
-#    map_public_ip_on_launch = true
-
-#    availability_zone = "eu-west-2a"
-
-#  }
-
-#  private_subnet = {
-
-#    cidr_block = "10.0.2.0/24"
-
-#    map_public_ip_on_launch = false
-
-#    availability_zone = "eu-west-2b"
-#  }
-#}
-
-variable "security_groups" {
-    type = map(object({
-        desc = string
-        vpc_id = string
-        ingress = map(object({
-            description = string
-            from_port = number
-            to_port = number
-            protocol = string
-            cidr_blocks = list(string)
-        }))
-        egress = map(object({
-            description = string
-            from_port = number
-            to_port = number
-            protocol = string
-            cidr_blocks = list(string)
-        }))
-    }))
-}
-
-/**
-    # security groups
-    security_groups = {
-      public-security-group = {
+security_groups = {
+    public-security-group = {
         desc = "security group for public subnet"
         vpc_id = aws_vpc.vpc.id
         ingress = {
@@ -96,9 +51,9 @@ variable "security_groups" {
             protocol    = "-1"
             to_port     = 0
         }
-      }
+    }
 
-      private-security-group = {
+    private-security-group = {
         desc = "security group for public subnet"
         vpc_id = aws_vpc.vpc.id
         ingress = {
@@ -116,7 +71,5 @@ variable "security_groups" {
             protocol    = "-1"
             to_port     = 0
         }
-      }
     }
-
-*/
+}
