@@ -9,7 +9,8 @@
   git:
     repo: https://github.com/Tassianna/restaurant-app.git
     dest: ./
-  become: true
+    clone: yes
+    update: true
 
 # inventory_hostname
 - name: Copy Docker Compose file for relevant service and overwrite original
