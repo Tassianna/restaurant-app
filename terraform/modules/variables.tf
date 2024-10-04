@@ -1,0 +1,1 @@
+# definition of variables to be used in resources and modules
