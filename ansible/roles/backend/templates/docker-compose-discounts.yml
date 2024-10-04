@@ -1,0 +1,11 @@
+version: "3.7"
+
+services:
+
+  discounts1:
+    build:
+      context: ./backend/discounts
+      dockerfile: Dockerfile
+    container_name: discount
+    ports:
+      - "3002:3002"
