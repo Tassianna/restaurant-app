@@ -10,11 +10,10 @@ resource "aws_security_group" "security_group" {
         for_each = each.value.ingress
 
         content {
-          description = ingress.key
           from_port = ingress.value.from_port
           to_port = ingress.value.to_port
           protocol = ingress.value.protocol
-          cidr_blocks = ingress.value.cidr_blocks
+          cidr_blocks = [ingress.value.cidr_blocks == true ? "0.0.0.0:/0" : aws_subnet.subnet["public_subnet"].cidr_block ]
         }
     }
 
@@ -22,11 +21,10 @@ resource "aws_security_group" "security_group" {
         for_each = each.value.egress
 
         content {
-          description = egress.key
           from_port = egress.value.from_port
           to_port = egress.value.to_port
           protocol = egress.value.protocol
-          cidr_blocks = egress.value.cidr_blocks
+          cidr_blocks = ["0.0.0.0/0"]
         }
     }
 
