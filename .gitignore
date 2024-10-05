@@ -17,3 +17,5 @@ mobile/.expo
 
 /terraform/terraform.tfstate*
 /terraform/.terraform*
+
+**/hosts
