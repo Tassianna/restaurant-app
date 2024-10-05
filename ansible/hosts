@@ -1,12 +1,10 @@
-
 [frontend]
-frontend ansibe_host=private_ip port=3000 ansible_user=ubuntu ansible_ssh_private_key_file=<key path>
+frontend ansible_host=10.0.2.159 port=3000 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem
 
 [backend]
-items ansibe_host=private_ip port=3003 ansible_user=ubuntu ansible_ssh_private_key_file=<key path>
-auth ansibe_host=private_ip port=3001 ansible_user=ubuntu ansible_ssh_private_key_file=<key path>
-discounts ansibe_host=private_ip port=3002 ansible_user=ubuntu ansible_ssh_private_key_file=<key path>
+items ansible_host=10.0.2.114 port=3003 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem
+auth ansible_host=10.0.2.231 port=3001 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem
+discounts ansible_host=10.0.2.25 port=3002 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem
 
 [haproxy]
-hap1 ansibe_host=public_ip ansible_user= ansible_ssh_private_key_file=<key path>
-
+haproxy ansible_host=18.169.163.70 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem

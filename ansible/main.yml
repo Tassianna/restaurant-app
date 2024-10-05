@@ -1,9 +1,9 @@
-- host: haproxy
+- hosts: haproxy
   roles:
     - haproxy
   become: yes
 
-- host: frontend
+- hosts: frontend
   roles:
     - frontend
   become: yes
