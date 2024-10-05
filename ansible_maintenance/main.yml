@@ -1,0 +1,27 @@
+---
+- name: Setup Maintenance Instance
+  hosts: maintenance
+  become: yes  # Use sudo
+  tasks:
+    - name: Ensure Ansible is installed
+      apt:
+        name: ansible
+        state: present
+        update_cache: yes
+
+    - name: Clone the Git repository
+      git:
+        repo: https://github.com/Tassianna/restaurant-app.git  # Replace with your repo URL
+        dest: /home/ubuntu/restaurant-app # Specify the path where you want to clone the repo
+        force: yes  # Ensures the repo is cloned even if it already exists
+
+    - name: Copy london.key to maintenance instance
+      copy:
+        src: /Users/tassianna/Desktop/london_key.pem  
+        dest: /home/ubuntu/london_key.pem
+        mode: '0600'  # Set permissions for the key
+
+    #- name: Run the Ansible playbook from the cloned repository
+    #  command: ansible-playbook ./restaurant-app/ansible/main.yml  
+    #  args:
+    #    chdir: ubuntu/home/restaurant-app        
