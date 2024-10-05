@@ -6,6 +6,6 @@ services:
     build:
       context: ./backend/discounts
       dockerfile: Dockerfile
-    container_name: discount
+    container_name: discounts
     ports:
       - "3002:3002"

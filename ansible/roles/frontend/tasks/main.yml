@@ -58,17 +58,18 @@
     update: true
 
 - name: Replace docker-compose file
-  template:
+  copy:
     src: ../templates/docker-compose.yml
     dest: /home/ubuntu/restaurant-app/docker-compose.yml
 
-#docker compose down for cleaning up:
-- name: Bring down Docker Compose
-  community.docker.docker_compose_v2:
-    project_src: /home/ubuntu/restaurant-app
-    files:
-      - docker-compose.yml
-    state: absent
+#docker compose down for cleaning up: 
+#uncomment if we want to compose down for some reason
+#- name: Bring down Docker Compose
+#  community.docker.docker_compose_v2:
+#    project_src: /home/ubuntu/restaurant-app
+#    files:
+#      - docker-compose.yml
+#    state: absent
 
 
 - name: Build and Compose containers
