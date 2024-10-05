@@ -3,6 +3,19 @@
   hosts: maintenance
   become: yes  # Use sudo
   tasks:
+    #
+    # from @antonioribeiro on https://github.com/ansible/ansible/issues/51663
+    # To prevent frontend lock error blocking ansible from running playbook in ubuntu
+    - name: Remove apt lock file
+      file:
+        state: absent
+        path: "/var/lib/dpkg/lock-frontend"
+      become: true
+      tags: apt
+    #
+    #
+    
+     
     - name: Ensure Ansible is installed
       apt:
         name: ansible
