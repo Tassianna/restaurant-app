@@ -4,7 +4,7 @@ services:
 
   frontend:
     build:
-      context: home/ubuntu/restaurant-app/client
+      context: ./client
       dockerfile: Dockerfile
     container_name: frontend
     ports:

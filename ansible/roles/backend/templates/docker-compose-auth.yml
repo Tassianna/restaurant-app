@@ -3,7 +3,7 @@ version: "3.7"
 services:
   auth:
     build:
-      context: home/ubuntu/restaurant-app/backend/auth
+      context: ./backend/auth
       dockerfile: Dockerfile
     container_name: auth
     ports:

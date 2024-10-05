@@ -4,7 +4,7 @@ services:
 
   items:
     build:
-      context: home/ubuntu/restaurant-app/backend/items
+      context: ./backend/items
       dockerfile: Dockerfile
     container_name: items
     ports:

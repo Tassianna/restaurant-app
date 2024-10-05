@@ -4,7 +4,7 @@ services:
 
   discounts:
     build:
-      context: home/ubuntu/restaurant-app/backend/discounts
+      context: ./backend/discounts
       dockerfile: Dockerfile
     container_name: discount
     ports:
