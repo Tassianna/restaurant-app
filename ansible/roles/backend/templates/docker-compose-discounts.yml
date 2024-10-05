@@ -2,9 +2,9 @@ version: "3.7"
 
 services:
 
-  discounts1:
+  discounts:
     build:
-      context: ./backend/discounts
+      context: home/ubuntu/restaurant-app/backend/discounts
       dockerfile: Dockerfile
     container_name: discount
     ports:

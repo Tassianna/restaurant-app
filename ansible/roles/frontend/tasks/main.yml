@@ -1,15 +1,60 @@
-- name: Install docker
+- name: Update apt package index
   apt:
-    name: "{{ packages }}"
-    state: present
     update_cache: yes
-  become: true
 
-- name: Clone GitHub repo
+- name: Install required packages for Docker installation
+  apt:
+    name:
+      - ca-certificates
+      - curl
+    state: present
+
+- name: Create the /etc/apt/keyrings directory
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+
+- name: Add Docker's official GPG key
+  get_url:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    dest: /etc/apt/keyrings/docker.asc
+    mode: '0644'
+
+- name: Update the apt package index again
+  apt:
+    update_cache: yes
+
+
+- name: Add the Docker APT repository
+  lineinfile:
+    path: /etc/apt/sources.list.d/docker.list
+    line: "deb [arch={{ ansible_architecture }} signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+    create: yes
+    mode: '0644'
+
+- name: Update apt package index again after adding Docker repository
+  apt:
+    update_cache: yes
+
+- name: Install Docker using the convenience script
+  shell: curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh
+  args:
+    executable: /bin/bash
+
+- name: Start and enable Docker service
+  systemd:
+    name: docker
+    state: started
+    enabled: yes
+
+
+- name: Clone repository
   git:
     repo: https://github.com/Tassianna/restaurant-app.git
-    dest: /home/ubuntu/
+    dest: /home/ubuntu/restaurant-app
     clone: yes
+    force: yes
     update: true
 
 - name: Replace docker-compose file
@@ -17,7 +62,8 @@
     src: ../templates/docker-compose.yml
     dest: /home/ubuntu/restaurant-app/docker-compose.yml
 
-- name: Run docker-compose up
-  docker_compose:
-    project_src: /home/ubuntu/restaurant-app/
-    state: present
+- name: Build and Compose containers
+  community.docker.docker_compose_v2:
+    project_src: /home/ubuntu/restaurant-app
+    files: 
+      - docker-compose.yml

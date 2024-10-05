@@ -2,10 +2,10 @@ version: "3.7"
 
 services:
 
-  frontend1:
+  frontend:
     build:
-      context: ./client
+      context: home/ubuntu/restaurant-app/client
       dockerfile: Dockerfile
-    container_name: client
+    container_name: frontend
     ports:
       - 3000:80

@@ -20,6 +20,8 @@
         src: /Users/tassianna/Desktop/london_key.pem  
         dest: /home/ubuntu/london_key.pem
         mode: '0600'  # Set permissions for the key
+    
+    # TODO: chown ubuntu:ubuntu /home/ubuntu/london_key.pem
 
     #- name: Run the Ansible playbook from the cloned repository
     #  command: ansible-playbook ./restaurant-app/ansible/main.yml  

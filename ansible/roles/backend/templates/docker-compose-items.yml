@@ -2,9 +2,9 @@ version: "3.7"
 
 services:
 
-  items1:
+  items:
     build:
-      context: ./backend/items
+      context: home/ubuntu/restaurant-app/backend/items
       dockerfile: Dockerfile
     container_name: items
     ports:
