@@ -67,7 +67,7 @@ terraform apply -auto-approve || exit 1  # Exit if apply fails
 echo "#"
 echo "#"
 echo "#"
-echo "# Step 2:  Extract Terraform outputs"
+echo "# Step 2:  Extract Terraform outputs to inject into new hosts file after cloning repository"
 echo "#"
 echo "#"
 echo "#" 
@@ -82,28 +82,11 @@ maintenance_ip=$(terraform output -json maintenance_ip | jq -r)
 echo "#"
 echo "#"
 echo "#"
-echo "# Step 3: Generate Ansible inventory"
+echo "# Step 3: Generate Ansible inventory for Maintenance"
 echo "#"
 echo "#"
 echo "#" 
 
-cat > ../ansible/hosts <<EOF
-[frontend]
-frontend ansible_host=$frontend_ip port=3000 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem
-
-[backend]
-items ansible_host=$items_service_ip port=3003 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem
-auth ansible_host=$auth_service_ip port=3001 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem
-discounts ansible_host=$discounts_service_ip port=3002 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem
-
-[haproxy]
-haproxy ansible_host=$haproxy_ip ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem
-EOF
-
-echo "# Ansible inventory file created: hosts"
-
-# Step 4: Generate Ansible inventory for maintenance
-# TODO: instead of /Users/tassianna/Desktop/london_key.pem we can add a variable!
 cat > ../ansible_maintenance/hosts <<EOF
 [maintenance]
 maintenance ansible_host=$maintenance_ip ansible_user=ubuntu ansible_ssh_private_key_file=$LOCAL_KEY
@@ -122,6 +105,21 @@ echo "#"
 # go back to restaurant-app folder
 cd ..
 cd ansible_maintenance
-ansible-playbook -i hosts main.yml --extra-vars "local_key=$LOCAL_KEY"
+ansible-playbook -i hosts main.yml --extra-vars "local_key=$LOCAL_KEY frontend=$frontend_ip items=$items_service_ip auth=$auth_service_ip discounts=$discounts_service_ip haproxy=$haproxy_ip"
+
+echo "#"
+echo "#"
+echo "#"
+echo "# Step 6: Run ansible playbook from maintenance ec2 instance"
+echo "#"
+echo "#"
+echo "#" 
+
+ssh -i $LOCAL_KEY ubuntu@$maintenance_ip /bin/bash  << EOF
+cd /home/ubuntu/restaurant-app
+cat ./ansible/hosts
+cd ansible
+ansible-playbook -i hosts main.yml 
+EOF
 
 

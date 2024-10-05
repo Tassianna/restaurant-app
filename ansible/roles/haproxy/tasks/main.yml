@@ -47,6 +47,7 @@
     name: docker
     state: started
     enabled: yes
+
 - name: Clone repository
   git:
     repo: https://github.com/Tassianna/restaurant-app.git
@@ -55,7 +56,6 @@
     force: yes
     update: true
 
-# inventory_hostname
 - name: Copy Docker Compose file for relevant service and overwrite original
   copy:
     src: "../templates/docker-compose.yml"

@@ -48,7 +48,6 @@
     state: started
     enabled: yes
 
-
 - name: Clone repository
   git:
     repo: https://github.com/Tassianna/restaurant-app.git
@@ -57,7 +56,7 @@
     force: yes
     update: true
 
-- name: Replace docker-compose file
+- name: Copy Docker Compose file for relevant service and overwrite original
   copy:
     src: ../templates/docker-compose.yml
     dest: /home/ubuntu/restaurant-app/docker-compose.yml

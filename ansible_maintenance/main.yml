@@ -21,12 +21,28 @@
       copy:
         src: "{{ local_key }}" # this is passed via playbook command in automated script
         dest: /home/ubuntu/london_key.pem
-        mode: '0600'  # Set permissions for the key
-    
-    # TODO: chown ubuntu:ubuntu /home/ubuntu/london_key.pem
 
-    - name: Run the Ansible playbook from the cloned repository
-      command: ansible-playbook ./ansible/main.yml  
-      args:
-        chdir: /home/ubuntu/restaurant-app  
+    # Use ansible builtin file to change permissions and owner of key
+    - name: Change Owner and permissions of key
+      ansible.builtin.file:
+        path: /home/ubuntu/london_key.pem
+        owner: ubuntu 
+        group: ubuntu
+        mode: '0600'
+
+    # Use retrieved values from terraform output to create new hosts file in cloned repository
+    - name: Creating a host file with content
+      copy:
+        dest: "/home/ubuntu/restaurant-app/ansible/hosts"
+        content: |
+          [frontend]
+          frontend ansible_host={{ frontend }} port=3000 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem
+
+          [backend]
+          items ansible_host={{ items }} port=3003 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem
+          auth ansible_host={{ auth }} port=3001 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem
+          discounts ansible_host={{ discounts }} port=3002 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem
+
+          [haproxy]
+          haproxy ansible_host={{ haproxy }} ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem
 
