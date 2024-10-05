@@ -14,5 +14,5 @@ output "items_service_ip" {
     value = aws_instance.instance["items_service"].private_ip
 }
 output "frontend_ip" {
-    value = aws_instance.instance["frontend"].private_ip
+    value = aws_instance.instance["client"].private_ip
 }

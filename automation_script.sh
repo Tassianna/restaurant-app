@@ -63,15 +63,15 @@ maintenance_ip=$(terraform output -json maintenance_ip | jq -r)
 #Step 3: Generate Ansible inventory
 cat > ../ansible/hosts <<EOF
 [frontend]
-frontend ansible_host=$frontend_ip port=3000 ansible_user=ubuntu ansible_ssh_private_key_file=/ubuntu/home/london_key.pem
+frontend ansible_host=$frontend_ip port=3000 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem
 
 [backend]
-items ansible_host=$items_service_ip port=3003 ansible_user=ubuntu ansible_ssh_private_key_file=/ubuntu/home/london_key.pem
-auth ansible_host=$auth_service_ip port=3001 ansible_user=ubuntu ansible_ssh_private_key_file=/ubuntu/home/london_key.pem
-discounts ansible_host=$discounts_service_ip port=3002 ansible_user=ubuntu ansible_ssh_private_key_file=/ubuntu/home/london_key.pem
+items ansible_host=$items_service_ip port=3003 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem
+auth ansible_host=$auth_service_ip port=3001 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem
+discounts ansible_host=$discounts_service_ip port=3002 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem
 
 [haproxy]
-haproxy ansible_host=$haproxy_ip ansible_user=ubuntu ansible_ssh_private_key_file=/ubuntu/home/london_key.pem
+haproxy ansible_host=$haproxy_ip ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem
 EOF
 
 echo "Ansible inventory file created: hosts"

@@ -101,7 +101,7 @@ instances = {
         EOF
     }
 
-    frontend = {
+    client = {
         availability_zone           = "eu-west-2b"
         vpc_security_group          = false
         subnet                      = "private_subnet"
