@@ -102,10 +102,10 @@ instances = {
     }
 
     client = {
-        availability_zone           = "eu-west-2b"
-        vpc_security_group          = false
-        subnet                      = "private_subnet"
-        associate_public_ip_address = false
+        availability_zone           = "eu-west-2a"
+        vpc_security_group          = true
+        subnet                      = "public_subnet"
+        associate_public_ip_address = true
         user_data                   = ""
     }
 
