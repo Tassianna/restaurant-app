@@ -85,9 +85,9 @@
 #    state: absent
 
 
-- name: Build and Compose containers
+- name: Build and Compose container
   community.docker.docker_compose_v2:
     project_src: /home/ubuntu/restaurant-app
     files: 
       - docker-compose.yml
-    detach: yes
+    

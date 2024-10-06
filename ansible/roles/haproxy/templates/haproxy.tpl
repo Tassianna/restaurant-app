@@ -29,14 +29,28 @@ frontend http-in
     use_backend items-backend if is_items
     use_backend frontend-backend if is_root
 
-{% for host in groups[backend] %}
-# Backend for the frontend service
-backend {{ hostvars[host]['inventory_host'] }}-backend
-    server {{ hostvars[host]['inventory_hostname'] }} {{ hostvars[host]['ansible_host'] }}:{{ hostvars[host]['port'] }}
+
+
+
+{% for host in groups['backend'] %}
+
+    {% if hostvars[host]['inventory_hostname'] == 'frontend' %}
+        backend {{ hostvars[host]['inventory_host'] }}-backend
+            server {{ hostvars[host]['inventory_hostname'] }} {{ hostvars[host]['ansible_host'] }}:{{ hostvars[host]['port'] }}
+     {% else %}
+        backend {{ hostvars[host]['inventory_host'] }}-backend
+            server {{ hostvars[host]['inventory_hostname'] }} {{ hostvars[host]['ansible_host'] }}:{{ hostvars[host]['port'] }}
+    {% endif %}
 {% endfor %}
 
-{% for host in groups[frontend] %}
+#{% for host in groups[backend] %}
 # Backend for the frontend service
-backend {{ hostvars[host]['inventory_host'] }}-backend
-    server {{ hostvars[host]['inventory_hostname'] }} {{ hostvars[host]['ansible_host'] }}:{{ hostvars[host]['port'] }}
-{% endfor %}
+#backend {{ hostvars[host]['inventory_host'] }}-backend
+#    server {{ hostvars[host]['inventory_hostname'] }} {{ hostvars[host]['ansible_host'] }}:{{ hostvars[host]['port'] }}
+#{% endfor %}
+
+#{% for host in groups[frontend] %}
+# Backend for the frontend service
+#backend {{ hostvars[host]['inventory_host'] }}-backend
+#    server {{ hostvars[host]['inventory_hostname'] }} {{ hostvars[host]['ansible_host'] }}:{{ hostvars[host]['port'] }}
+#{% endfor %}
