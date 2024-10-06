@@ -83,4 +83,4 @@
     project_src: /home/ubuntu/restaurant-app
     files: 
       - docker-compose.yml
-    detach: yes
+    #state: present

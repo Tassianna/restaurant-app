@@ -21,13 +21,18 @@
         name: ansible
         state: present
         update_cache: yes
+      #in case ansible installation takes too long:
+      register: result   # Register the result of the task
+      retries: 5         # Retry up to 5 times
+      delay: 10          # Wait 10 seconds between retries
+      until: result is succeeded  # Ensure to check for the correct task result
 
     - name: Clone the Git repository
       git:
-        repo: https://github.com/Tassianna/restaurant-app.git  # Replace with your repo URL
-        dest: /home/ubuntu/restaurant-app # Specify the path where you want to clone the repo
+        repo: https://github.com/Tassianna/restaurant-app.git  
+        dest: /home/ubuntu/restaurant-app 
         clone: yes
-        force: yes  # Ensures the repo is cloned even if it already exists
+        force: yes  
         update: true
 
     - name: Copy london.key to maintenance instance
@@ -48,13 +53,12 @@
       copy:
         dest: "/home/ubuntu/restaurant-app/ansible/hosts"
         content: |
-          [frontend]
-          frontend ansible_host={{ frontend }} port=3000 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem
 
           [backend]
           items ansible_host={{ items }} port=3003 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem
           auth ansible_host={{ auth }} port=3001 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem
           discounts ansible_host={{ discounts }} port=3002 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem
+          frontend ansible_host={{ frontend }} port=3000 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem
 
           [haproxy]
           haproxy ansible_host={{ haproxy }} ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem

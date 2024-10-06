@@ -3,12 +3,13 @@
     - haproxy
   become: yes
 
-- hosts: frontend
-  roles:
-    - frontend
-  become: yes
-
 - hosts: backend
   roles:
     - backend
-  become: yes
+  become: yes 
+
+#- hosts: frontend
+#  roles:
+#    - frontend
+#  become: yes
+
