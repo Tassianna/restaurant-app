@@ -1,3 +1,15 @@
+
+#
+# from @antonioribeiro on https://github.com/ansible/ansible/issues/51663
+# To prevent frontend lock error blocking ansible from running playbook in ubuntu
+- name: Remove apt lock file
+  file:
+    state: absent
+    path: "/var/lib/dpkg/lock-frontend"
+  become: true
+  tags: apt
+#
+#
 - name: Update apt package index
   apt:
     update_cache: yes
@@ -78,3 +90,4 @@
     project_src: /home/ubuntu/restaurant-app
     files: 
       - docker-compose.yml
+    detach: yes
