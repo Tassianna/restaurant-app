@@ -12,20 +12,7 @@
         path: "/var/lib/dpkg/lock-frontend"
       become: true
       tags: apt
-    #
-    #
-    
-     
-    - name: Ensure Ansible is installed
-      apt:
-        name: ansible
-        state: present
-        update_cache: yes
-      #in case ansible installation takes too long:
-      register: result   # Register the result of the task
-      retries: 5         # Retry up to 5 times
-      delay: 10          # Wait 10 seconds between retries
-      until: result is succeeded  # Ensure to check for the correct task result
+   
 
     - name: Clone the Git repository
       git:

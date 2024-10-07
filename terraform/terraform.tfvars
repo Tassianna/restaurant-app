@@ -94,6 +94,7 @@ instances = {
         vpc_security_group          = true
         subnet                      = "public_subnet"
         associate_public_ip_address = true
+        instance_type               = "t2.micro"
         user_data                   = <<-EOF
         #!/bin/bash
         sudo apt update -y
@@ -106,6 +107,7 @@ instances = {
         vpc_security_group          = true
         subnet                      = "public_subnet"
         associate_public_ip_address = true
+        instance_type               = "t2.large"
         user_data                   = ""
     }
 
@@ -114,6 +116,7 @@ instances = {
         vpc_security_group          = false
         subnet                      = "private_subnet"
         associate_public_ip_address = false
+        instance_type               = "t2.micro"
         user_data                   = ""
     }
 
@@ -121,6 +124,7 @@ instances = {
         availability_zone           = "eu-west-2b"
         vpc_security_group          = false
         subnet                      = "private_subnet"
+        instance_type               = "t2.micro"
         associate_public_ip_address = false
         user_data                   = ""
     }
@@ -128,6 +132,7 @@ instances = {
     items_service = {
         availability_zone           = "eu-west-2b"
         vpc_security_group          = false
+        instance_type               = "t2.micro"
         subnet                      = "private_subnet"
         associate_public_ip_address = false
         user_data                   = ""
@@ -136,6 +141,7 @@ instances = {
     haproxy_1 = {
         availability_zone           = "eu-west-2a"
         vpc_security_group          = true
+        instance_type               = "t2.micro"
         subnet                      = "public_subnet"
         associate_public_ip_address = true
         user_data                   = ""
@@ -144,6 +150,7 @@ instances = {
     haproxy_2 = {
         availability_zone           = "eu-west-2a"
         vpc_security_group          = true
+        instance_type               = "t2.micro"
         subnet                      = "public_subnet"
         associate_public_ip_address = true
         user_data                   = ""
@@ -152,6 +159,7 @@ instances = {
     lb = {
         availability_zone           = "eu-west-2a"
         vpc_security_group          = true
+        instance_type               = "t2.micro"
         subnet                      = "public_subnet"
         associate_public_ip_address = true
         user_data                   = ""
@@ -159,5 +167,5 @@ instances = {
 }
 
 ami_image     = "ami-01ec84b284795cbc7"
-instance_type = "t2.micro"
+#instance_type = "t2.micro"
 key_name      = "london_key"

@@ -47,6 +47,7 @@ variable "instances"{
         vpc_security_group          = bool
         subnet                      = string
         associate_public_ip_address = bool
+        instance_type               = string
         user_data                   = string
     }))
 }
@@ -58,7 +59,6 @@ variable "key_name" {
   type = string
 }
 
-variable "instance_type" {
-  type    = string
-  default = "t2.micro"
-}
+
+
+
