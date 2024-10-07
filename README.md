@@ -1,4 +1,4 @@
-# ---------------------------- ansible playbooks explanation -----------------------------
+# ansible playbooks explanation 
 restaurant-app
 ├── ansible
 │   ├── main.yml               # Playbook to be executed on the maintenance instance
@@ -10,7 +10,7 @@ restaurant-app
 
 
 
-# ----------------------- explanation of dynamic-inventory-script --------------------------
+#  explanation of dynamic-inventory-script 
 
 1. Installing jq, a JSON processor, if it is not already installed (supports Ubuntu/Debian and macOS).
 2. Deploying infrastructure using Terraform by running terraform init, valide, plan and apply.
@@ -21,17 +21,17 @@ restaurant-app
 
 
 
-# -------docker compose--------
+# docker compose
 
 docker-compose build 
 
 docker-compose up  
 
-------frontend available------
+frontend available:
 
 http://localhost
 
-# ------backend-services available------
+# backend-services available
 
 http://localhost:3001/api/auth  
 
