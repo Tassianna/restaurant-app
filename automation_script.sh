@@ -101,7 +101,7 @@ echo "# Step 4: Run ansible_maintenance playbook"
 echo "#"
 echo "#"
 echo "#" 
-
+sleep(30000)  #sleep for 30secs
 # go back to restaurant-app folder
 cd ..
 cd ansible_maintenance
