@@ -32,19 +32,10 @@ frontend http-in
 
 
 
+# Backends
 {% for host in groups['backend'] %}
-    backend {{ inventory_hostname }}-backend
-        server {{ inventory_hostname }} {{ ansible_host }}:{{ hostvars[host]['port'] }}      
+backend {{ host }}-backend
+    server {{ host }} {{ hostvars[host]['ansible_host'] }}:{{ hostvars[host]['port'] }}
 {% endfor %}
 
-#{% for host in groups[backend] %}
-# Backend for the frontend service
-#backend {{ hostvars[host]['inventory_host'] }}-backend
-#    server {{ hostvars[host]['inventory_hostname'] }} {{ hostvars[host]['ansible_host'] }}:{{ hostvars[host]['port'] }}
-#{% endfor %}
 
-#{% for host in groups[frontend] %}
-# Backend for the frontend service
-#backend {{ hostvars[host]['inventory_host'] }}-backend
-#    server {{ hostvars[host]['inventory_hostname'] }} {{ hostvars[host]['ansible_host'] }}:{{ hostvars[host]['port'] }}
-#{% endfor %}
