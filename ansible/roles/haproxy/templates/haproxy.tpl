@@ -33,14 +33,8 @@ frontend http-in
 
 
 {% for host in groups['backend'] %}
-
-    {% if hostvars[host]['inventory_hostname'] == 'frontend' %}
-        backend {{ hostvars[host]['inventory_host'] }}-backend
-            server {{ hostvars[host]['inventory_hostname'] }} {{ hostvars[host]['ansible_host'] }}:{{ hostvars[host]['port'] }}
-     {% else %}
-        backend {{ hostvars[host]['inventory_host'] }}-backend
-            server {{ hostvars[host]['inventory_hostname'] }} {{ hostvars[host]['ansible_host'] }}:{{ hostvars[host]['port'] }}
-    {% endif %}
+    backend {{ inventory_hostname }}-backend
+        server {{ inventory_hostname }} {{ ansible_host }}:{{ hostvars[host]['port'] }}      
 {% endfor %}
 
 #{% for host in groups[backend] %}
