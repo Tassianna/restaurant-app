@@ -74,7 +74,7 @@
     dest: "/home/ubuntu/restaurant-app/docker-compose.yml"
 
 - name: Copy Docker haproxy file
-  copy:
+  template:
     src: "../templates/haproxy.tpl"
     dest: "/home/ubuntu/restaurant-app/haproxy.cfg"
 
