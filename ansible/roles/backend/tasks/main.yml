@@ -85,18 +85,9 @@
 #    state: absent
 
 
-#- name: Build and Compose container
-#  community.docker.docker_compose_v2:
-#    project_src: /home/ubuntu/restaurant-app
-#    files: 
-#      - docker-compose.yml
+- name: Build and Compose container
+  community.docker.docker_compose_v2:
+    project_src: /home/ubuntu/restaurant-app
+    files: 
+      - docker-compose.yml
 
-- name: Build Docker images using docker-compose
-  docker_compose:
-    project_src: /home/ubuntu/restaurant-app/docker-compose.yml
-    build: yes
-
-- name: Start containers with Docker Compose (detached mode)
-  docker_compose:
-    project_src: /home/ubuntu/restaurant-app/docker-compose.yml
-    state: started  # This is equivalent to `docker-compose up -d`
