@@ -193,16 +193,3 @@ instances = {
 ami_image = "ami-01ec84b284795cbc7"
 #instance_type = "t2.micro"
 key_name = "london_key"
-
-######### Scaling groups & policies
-
-scaling_policies = {
-  backend_out = {
-    group_name       = "backend_scaling_group"
-    adjustment_value = 1
-  }
-  backend_in = {
-    group_name       = "backend_scaling_group"
-    adjustment_value = -1
-  }
-}

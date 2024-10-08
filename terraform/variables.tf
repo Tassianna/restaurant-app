@@ -60,12 +60,4 @@ variable "key_name" {
 }
 
 
-######### Scaling groups & policies
-
-variable "scaling_policies" {
-  type = map(object({
-    group_name       = string
-    adjustment_value = number
-  }))
-}
 
