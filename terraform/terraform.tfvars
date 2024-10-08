@@ -163,33 +163,104 @@ instances = {
   }
 
   haproxy_1 = {
-    availability_zone           = "eu-west-2a"
-    vpc_security_group          = true
-    instance_type               = "t2.micro"
-    subnet                      = "public_subnet"
-    associate_public_ip_address = true
-    user_data                   = ""
+      availability_zone           = "eu-west-2a"
+      vpc_security_group          = true
+      instance_type               = "t2.micro"
+      subnet                      = "public_subnet"
+      associate_public_ip_address = true
+      user_data                   = ""
   }
-
-  haproxy_2 = {
-    availability_zone           = "eu-west-2a"
-    vpc_security_group          = true
-    instance_type               = "t2.micro"
-    subnet                      = "public_subnet"
-    associate_public_ip_address = true
-    user_data                   = ""
-  }
-
-  lb = {
-    availability_zone           = "eu-west-2a"
-    vpc_security_group          = true
-    instance_type               = "t2.micro"
-    subnet                      = "public_subnet"
-    associate_public_ip_address = true
-    user_data                   = ""
-  }
+    
 }
 
 ami_image = "ami-01ec84b284795cbc7"
 #instance_type = "t2.micro"
-key_name = "london_key"
+key_name      = "london_key"
+
+
+
+############################ELB############################
+
+
+elbs = {
+  auth-elb = {
+    security_groups = "auth_elb_sg"
+    subnets = "private_subnet"
+    cross_zone_load_balancing = false
+  }
+  items-elb = {
+    security_groups = "items_elb_sg"
+    subnets = "private_subnet"
+    cross_zone_load_balancing = false
+  }
+  discounts-elb = {
+    security_groups = "discounts_elb_sg"
+    subnets = "private_subnet"
+    cross_zone_load_balancing = false
+  }
+}
+
+elb_sg = {
+  auth_elb_sg = {
+    desc = "Auth-ELB security group"
+    ingress = {
+      allow_ssh_traffic = {
+        from_port   = 22
+        protocol    = "tcp"
+        to_port     = 22
+      }
+      allow_http_traffic = {
+        from_port   = 80
+        to_port     = 80
+        protocol    = "tcp"
+      }
+      allow_tcp_auth_traffic = {
+        from_port   = 3001
+        to_port     = 3001
+        protocol    = "tcp"
+      }
+    }
+  }
+
+  discounts_elb_sg = {
+    desc = "Discounts-ELB security group"
+    ingress = {
+      allow_ssh_traffic = {
+        from_port   = 22
+        protocol    = "tcp"
+        to_port     = 22
+      }
+      allow_http_traffic = {
+        from_port   = 80
+        to_port     = 80
+        protocol    = "tcp"
+      }
+      allow_tcp_auth_traffic = {
+        from_port   = 3002
+        to_port     = 3002
+        protocol    = "tcp"
+      }
+    }
+  }
+
+  items_elb_sg = {
+    desc = "Items-ELB security group"
+    ingress = {
+      allow_ssh_traffic = {
+        from_port   = 22
+        protocol    = "tcp"
+        to_port     = 22
+      }
+      allow_http_traffic = {
+        from_port   = 80
+        to_port     = 80
+        protocol    = "tcp"
+      }
+      allow_tcp_auth_traffic = {
+        from_port   = 3003
+        to_port     = 3003
+        protocol    = "tcp"
+      }
+    }
+  }
+}

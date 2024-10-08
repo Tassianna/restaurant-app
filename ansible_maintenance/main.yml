@@ -42,10 +42,10 @@
         content: |
 
           [backend]
-          items ansible_host={{ items }} port=3003 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem
-          auth ansible_host={{ auth }} port=3001 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem
-          discounts ansible_host={{ discounts }} port=3002 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem
-          frontend ansible_host={{ frontend }} port=3000 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem
+          items ansible_host={{ items }} elb={{ items_elb }} elb_name=items_elb port=3003 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem
+          auth ansible_host={{ auth }} elb={{ auth_elb }} elb_name=auth_elb port=3001 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem
+          discounts ansible_host={{ discounts }} elb={{ discounts_elb }} elb_name=discounts_elb  port=3002 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem
+          frontend ansible_host={{ frontend }} elb_name="" port=3000 ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem
 
           [haproxy]
           haproxy ansible_host={{ haproxy }} ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/london_key.pem
