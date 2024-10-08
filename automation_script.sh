@@ -135,10 +135,38 @@ cd /home/ubuntu/restaurant-app
 cat ./ansible/hosts
 cd ansible
 ansible-playbook -i hosts main.yml 
+exit
 EOF
 
-### run second terraform 
-#  terraform apply -var="private_security_group_name=$private_security_group_name" -var="private_subnet_id=$private_subnet_id" -var='scaling_groups={"items":{"loadbalancer":$items_elb_id, "template":"items_ami_template"},"discounts":{"loadbalancer":$discounts_elb_id, "template":"discounts_ami_template"}, "auth":{"loadbalancer":$auth_elb_id, "template":"auth_ami_template"}}' -var='images={"items":{"name":"items_ami","source_instance_id":$items_service_id}, "auth":{"name":"auth_ami", "source_instance_id":$auth_service_id}, "discounts":{"name":"discounts_ami", "source_instance_id":"$discounts_service_id"}}'
+echo "#"
+echo "#"
+echo "#"
+echo "# Step 6: Run Terraform apply in scaling terraform to deploy images, autoscaling groups, policies, alarms and logs"
+echo "#"
+echo "#"
+echo "#" 
+echo "# Initializing Second Terraform..."
+cd ./scaling-terraform || exit 1  # Ensure script stops if directory change fails
+terraform init -var="private_security_group_name=$private_security_group_name" -var="private_subnet_id=$private_subnet_id" -var="scaling_groups={'items':{'loadbalancer':$items_elb_id, 'template':'items_ami_template'},'discounts':{'loadbalancer':$discounts_elb_id, 'template':'discounts_ami_template'}, 'auth':{'loadbalancer':$auth_elb_id, 'template':'auth_ami_template'}}" -var="images={'items':{'name':'items_ami','source_instance_id':$items_service_id}, 'auth':{'name':'auth_ami', 'source_instance_id':$auth_service_id}, 'discounts':{'name':'discounts_ami', 'source_instance_id':$discounts_service_id}}" || exit 1  # Exit if init fails
 
+echo "Validating Terraform configuration..."
+terraform validate -var="private_security_group_name=$private_security_group_name" -var="private_subnet_id=$private_subnet_id" -var="scaling_groups={'items':{'loadbalancer':$items_elb_id, 'template':'items_ami_template'},'discounts':{'loadbalancer':$discounts_elb_id, 'template':'discounts_ami_template'}, 'auth':{'loadbalancer':$auth_elb_id, 'template':'auth_ami_template'}}" -var="images={'items':{'name':'items_ami','source_instance_id':$items_service_id}, 'auth':{'name':'auth_ami', 'source_instance_id':$auth_service_id}, 'discounts':{'name':'discounts_ami', 'source_instance_id':$discounts_service_id}}" || exit 1  # Exit if validation fails
 
+echo "Generating Terraform plan..."
+terraform plan -var="private_security_group_name=$private_security_group_name" -var="private_subnet_id=$private_subnet_id" -var="scaling_groups={'items':{'loadbalancer':$items_elb_id, 'template':'items_ami_template'},'discounts':{'loadbalancer':$discounts_elb_id, 'template':'discounts_ami_template'}, 'auth':{'loadbalancer':$auth_elb_id, 'template':'auth_ami_template'}}" -var="images={'items':{'name':'items_ami','source_instance_id':$items_service_id}, 'auth':{'name':'auth_ami', 'source_instance_id':$auth_service_id}, 'discounts':{'name':'discounts_ami', 'source_instance_id':$discounts_service_id}}" || exit 1  # Exit if planning fails
+
+echo "Applying Terraform plan..."
+terraform apply -auto-approve -var="private_security_group_name=$private_security_group_name" -var="private_subnet_id=$private_subnet_id" -var="scaling_groups={'items':{'loadbalancer':$items_elb_id, 'template':'items_ami_template'},'discounts':{'loadbalancer':$discounts_elb_id, 'template':'discounts_ami_template'}, 'auth':{'loadbalancer':$auth_elb_id, 'template':'auth_ami_template'}}" -var="images={'items':{'name':'items_ami','source_instance_id':$items_service_id}, 'auth':{'name':'auth_ami', 'source_instance_id':$auth_service_id}, 'discounts':{'name':'discounts_ami', 'source_instance_id':$discounts_service_id}}" || exit 1  # Exit if apply fails
+
+echo "#"
+echo "#"
+echo "#"
+echo "# Step 7: Delete original micro services to allow autoscaling to work"
+echo "#"
+echo "#"
+echo "#" 
+cd ../terraform || exit 1
+terraform destroy -target aws_instance.items_service -auto-approve
+terraform destroy -target aws_instance.auth_service -auto-approve
+terraform destroy -target aws_instance.discounts_service -auto-approve
 
