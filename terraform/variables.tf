@@ -59,3 +59,24 @@ variable "key_name" {
   type = string
 }
 
+##########################ELB##########################
+
+variable "elbs"{
+  type = map (object({
+    security_groups = string
+    subnets = string
+    cross_zone_load_balancing = bool
+  }))
+}
+
+#elb security groups
+variable "elb_sg" {
+  type = map(object({
+    desc = string
+    ingress = map(object({
+      from_port   = number
+      to_port     = number
+      protocol    = string
+    }))
+  }))
+}
