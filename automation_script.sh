@@ -137,4 +137,8 @@ cd ansible
 ansible-playbook -i hosts main.yml 
 EOF
 
+### run second terraform 
+#  terraform apply -var="private_security_group_name=$private_security_group_name" -var="private_subnet_id=$private_subnet_id" -var='scaling_groups={"items":{"loadbalancer":$items_elb_id, "template":"items_ami_template"},"discounts":{"loadbalancer":$discounts_elb_id, "template":"discounts_ami_template"}, "auth":{"loadbalancer":$auth_elb_id, "template":"auth_ami_template"}}' -var='images={"items":{"name":"items_ami","source_instance_id":$items_service_id}, "auth":{"name":"auth_ami", "source_instance_id":$auth_service_id}, "discounts":{"name":"discounts_ami", "source_instance_id":"$discounts_service_id"}}'
+
+
 
