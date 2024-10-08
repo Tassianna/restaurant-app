@@ -5,7 +5,7 @@ resource "aws_autoscaling_group" "autoscaling_group" {
 
   min_size            = 1
   max_size            = 5
-  desired_capacity    = 2
+  desired_capacity    = 1
   vpc_zone_identifier = [var.private_subnet_id] # Subnets your ASG can deploy instances into
   load_balancers      = [each.value.loadbalancer]
 
