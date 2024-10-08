@@ -41,15 +41,15 @@ variable "route-tables" {
 }
 
 #########################EC2###########################
-variable "instances"{
-    type = map (object({
-        availability_zone           = string
-        vpc_security_group          = bool
-        subnet                      = string
-        associate_public_ip_address = bool
-        instance_type               = string
-        user_data                   = string
-    }))
+variable "instances" {
+  type = map(object({
+    availability_zone           = string
+    vpc_security_group          = bool
+    subnet                      = string
+    associate_public_ip_address = bool
+    instance_type               = string
+    user_data                   = string
+  }))
 }
 
 variable "ami_image" {

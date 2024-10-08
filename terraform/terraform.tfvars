@@ -1,6 +1,6 @@
 
 cidr_block = "10.0.0.0/16"
-vpc_name = "Tassi & Graces Project VPC"
+vpc_name   = "Tassi & Graces Project VPC"
 
 subnets = {
   public_subnet = {
@@ -105,7 +105,7 @@ route-tables = {
 }
 
 route-associations = {
-  public-association = true
+  public-association  = true
   private-association = false
 }
 
@@ -113,67 +113,67 @@ route-associations = {
 
 instances = {
 
-    maintenance = {
-        availability_zone           = "eu-west-2a"
-        vpc_security_group          = true
-        subnet                      = "public_subnet"
-        associate_public_ip_address = true
-        instance_type               = "t2.micro"
-        user_data                   = <<-EOF
+  maintenance = {
+    availability_zone           = "eu-west-2a"
+    vpc_security_group          = true
+    subnet                      = "public_subnet"
+    associate_public_ip_address = true
+    instance_type               = "t2.micro"
+    user_data                   = <<-EOF
         #!/bin/bash
         sudo apt update -y
         sudo apt install ansible -y
         EOF
-    }
+  }
 
-    client = {
-        availability_zone           = "eu-west-2a"
-        vpc_security_group          = true
-        subnet                      = "public_subnet"
-        associate_public_ip_address = true
-        instance_type               = "t2.large"
-        user_data                   = ""
-    }
+  client = {
+    availability_zone           = "eu-west-2a"
+    vpc_security_group          = true
+    subnet                      = "public_subnet"
+    associate_public_ip_address = true
+    instance_type               = "t2.large"
+    user_data                   = ""
+  }
 
-    auth_service = {
-        availability_zone           = "eu-west-2b"
-        vpc_security_group          = false
-        subnet                      = "private_subnet"
-        associate_public_ip_address = false
-        instance_type               = "t2.micro"
-        user_data                   = ""
-    }
+  auth_service = {
+    availability_zone           = "eu-west-2b"
+    vpc_security_group          = false
+    subnet                      = "private_subnet"
+    associate_public_ip_address = false
+    instance_type               = "t2.micro"
+    user_data                   = ""
+  }
 
-    discounts_service = {
-        availability_zone           = "eu-west-2b"
-        vpc_security_group          = false
-        subnet                      = "private_subnet"
-        instance_type               = "t2.micro"
-        associate_public_ip_address = false
-        user_data                   = ""
-    }
+  discounts_service = {
+    availability_zone           = "eu-west-2b"
+    vpc_security_group          = false
+    subnet                      = "private_subnet"
+    instance_type               = "t2.micro"
+    associate_public_ip_address = false
+    user_data                   = ""
+  }
 
-    items_service = {
-        availability_zone           = "eu-west-2b"
-        vpc_security_group          = false
-        instance_type               = "t2.micro"
-        subnet                      = "private_subnet"
-        associate_public_ip_address = false
-        user_data                   = ""
-    }
+  items_service = {
+    availability_zone           = "eu-west-2b"
+    vpc_security_group          = false
+    instance_type               = "t2.micro"
+    subnet                      = "private_subnet"
+    associate_public_ip_address = false
+    user_data                   = ""
+  }
 
-    haproxy_1 = {
-        availability_zone           = "eu-west-2a"
-        vpc_security_group          = true
-        instance_type               = "t2.micro"
-        subnet                      = "public_subnet"
-        associate_public_ip_address = true
-        user_data                   = ""
-    }
+  haproxy_1 = {
+      availability_zone           = "eu-west-2a"
+      vpc_security_group          = true
+      instance_type               = "t2.micro"
+      subnet                      = "public_subnet"
+      associate_public_ip_address = true
+      user_data                   = ""
+  }
     
 }
 
-ami_image     = "ami-01ec84b284795cbc7"
+ami_image = "ami-01ec84b284795cbc7"
 #instance_type = "t2.micro"
 key_name      = "london_key"
 
