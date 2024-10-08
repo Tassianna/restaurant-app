@@ -20,7 +20,7 @@ resource "aws_elb" "elb" {
   listener {
     lb_port = 80
     lb_protocol = "http"
-    instance_port = "80"
+    instance_port = each.value.port
     instance_protocol = "http"
   }
   for_each = var.elbs

@@ -66,6 +66,7 @@ variable "elbs"{
     security_groups = string
     subnets = string
     cross_zone_load_balancing = bool
+    port = number
   }))
 }
 

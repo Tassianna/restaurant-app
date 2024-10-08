@@ -9,13 +9,13 @@ export $(grep -v '^#' .env | xargs)
 # What we do is to check if the jq is installed and if not
 # installing it depending on the OS. We only added mac and linux os.
 
-echo "#"
-echo "#"
-echo "#"
+echo "."
+echo "."
+echo "."
 echo "# Step 0: Check if jq is installed, and install if not"
-echo "#"
-echo "#"
-echo "#" 
+echo "."
+echo "."
+echo "." 
 echo "# Checking if jq is installed..."
 
 if ! command -v jq &> /dev/null
@@ -44,13 +44,13 @@ then
     fi
 fi
 
-echo "#"
-echo "#"
-echo "#"
+echo "."
+echo "."
+echo "."
 echo "# Step 1: Run Terraform apply to deploy resources and generate outputs"
-echo "#"
-echo "#"
-echo "#" 
+echo "."
+echo "."
+echo "." 
 echo "# Initializing Terraform..."
 cd ./terraform || exit 1  # Ensure script stops if directory change fails
 terraform init || exit 1  # Exit if init fails
@@ -64,13 +64,13 @@ terraform plan || exit 1  # Exit if planning fails
 echo "Applying Terraform plan..."
 terraform apply -auto-approve || exit 1  # Exit if apply fails
 
-echo "#"
-echo "#"
-echo "#"
+echo "."
+echo "."
+echo "."
 echo "# Step 2:  Extract Terraform outputs to inject into new hosts file after cloning repository"
-echo "#"
-echo "#"
-echo "#" 
+echo "."
+echo "."
+echo "." 
 pwd
 frontend_ip=$(terraform output -json frontend_ip | jq -r)
 items_service_ip=$(terraform output -json items_service_ip | jq -r)
@@ -94,42 +94,52 @@ items_elb_id=$(terraform output -json items_elb_id | jq -r)
 private_subnet_id=$(terraform output -json private_subnet_id | jq -r)
 private_security_group_id=$(terraform output -json private_security_group_id | jq -r)
 
-echo "#"
-echo "#"
-echo "#"
-echo "# Step 3: Generate Ansible inventory for Maintenance"
-echo "#"
-echo "#"
-echo "#" 
+cd ..
+echo > ./automate_destroy.sh <<EOF
+#!/bin/bash
+cd ./scaling-terraform
+terraform destroy -var="private_security_group_id=$private_security_group_id" -var="private_subnet_id=$private_subnet_id"
+cd ..
+cd ./terraform
+terraform destroy --auto-approve
+EOF
 
-cat > ../ansible_maintenance/hosts <<EOF
+echo "."
+echo "."
+echo "."
+echo "# Step 3: Generate Ansible inventory for Maintenance"
+echo "."
+echo "."
+echo "." 
+
+cat > ./ansible_maintenance/hosts <<EOF
 [maintenance]
 maintenance ansible_host=$maintenance_ip ansible_user=ubuntu ansible_ssh_private_key_file=$LOCAL_KEY
 EOF
 
 echo "# Ansible_maintenance inventory file created: hosts"
 
-echo "#"
-echo "#"
-echo "#"
+echo "."
+echo "."
+echo "."
 echo "# Step 4: Run ansible_maintenance playbook"
-echo "#"
-echo "#"
-echo "#" 
-sleep 30  
+echo "."
+echo "."
+echo "."
+echo "# waiting for aws to initialise ec2 completely before running ansible" 
+sleep 40  
 # go back to restaurant-app folder
-cd ..
 cd ansible_maintenance
 pwd
 ansible-playbook -i hosts main.yml --extra-vars "local_key=$LOCAL_KEY frontend=$frontend_ip items=$items_service_ip auth=$auth_service_ip discounts=$discounts_service_ip haproxy=$haproxy_ip auth_elb=$auth_elb_dns discounts_elb=$discounts_elb_dns items_elb=$items_elb_dns"
 
-echo "#"
-echo "#"
-echo "#"
+echo "."
+echo "."
+echo "."
 echo "# Step 5: Run ansible playbook from maintenance ec2 instance"
-echo "#"
-echo "#"
-echo "#" 
+echo "."
+echo "."
+echo "." 
 
 ssh -i $LOCAL_KEY ubuntu@$maintenance_ip /bin/bash  << EOF
 cd /home/ubuntu/restaurant-app
@@ -140,13 +150,13 @@ ansible-playbook -i hosts main.yml
 exit
 EOF
 
-echo "#"
-echo "#"
-echo "#"
+echo "."
+echo "."
+echo "."
 echo "# Step 6: Run Terraform apply in scaling terraform to deploy images, autoscaling groups, policies, alarms and logs"
-echo "#"
-echo "#"
-echo "#" 
+echo "."
+echo "."
+echo "." 
 echo "# Initializing Second Terraform..."
 
 
@@ -181,6 +191,6 @@ terraform apply -auto-approve \
 
 cd ..
 cd terraform
-terraform destroy aws_instance.items_service  -auto-approve
-terraform destroy aws_instance.auth_service  -auto-approve
-terraform destroy aws_instance.discounts_service  -auto-approve
+terraform destroy aws_instance.items_service
+terraform destroy aws_instance.auth_service
+terraform destroy aws_instance.discounts_service
