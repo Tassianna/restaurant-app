@@ -188,7 +188,7 @@ elbs = {
     subnets = "private_subnet"
     cross_zone_load_balancing = false
   }
-  itemselb = {
+  items-elb = {
     security_groups = "items_elb_sg"
     subnets = "private_subnet"
     cross_zone_load_balancing = false

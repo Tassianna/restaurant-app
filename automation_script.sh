@@ -79,6 +79,20 @@ discounts_service_ip=$(terraform output -json discounts_service_ip | jq -r)
 haproxy_ip=$(terraform output -json haproxy_ip | jq -r)
 maintenance_ip=$(terraform output -json maintenance_ip | jq -r)
 
+auth_service_id=$(terraform output -json auth_service_id | jq -r)
+items_service_id=$(terraform output -json items_service_id | jq -r)
+discounts_service_id=$(terraform output -json discounts_service_id | jq -r)
+
+auth_elb_dns=$(terraform output -json auth_elb_dns | jq -r)
+discounts_elb_dns=$(terraform output -json discounts_elb_dns | jq -r)
+items_elb_dns=$(terraform output -json items_elb_dns | jq -r)
+
+auth_elb_id=$(terraform output -json auth_elb_id | jq -r)
+discounts_elb_id=$(terraform output -json discounts_elb_id | jq -r)
+items_elb_id=$(terraform output -json items_elb_id | jq -r)
+
+private_subnet_id=$(terraform output -json private_subnet_id | jq -r)
+
 echo "#"
 echo "#"
 echo "#"
@@ -105,7 +119,7 @@ sleep 30
 # go back to restaurant-app folder
 cd ..
 cd ansible_maintenance
-ansible-playbook -i hosts main.yml --extra-vars "local_key=$LOCAL_KEY frontend=$frontend_ip items=$items_service_ip auth=$auth_service_ip discounts=$discounts_service_ip haproxy=$haproxy_ip"
+ansible-playbook -i hosts main.yml --extra-vars "local_key=$LOCAL_KEY frontend=$frontend_ip items=$items_service_ip auth=$auth_service_ip discounts=$discounts_service_ip haproxy=$haproxy_ip auth_elb=$auth_elb_dns discounts_elb=$discounts_elb_dns items_elb=$items_elb_dns"
 
 echo "#"
 echo "#"

@@ -35,7 +35,19 @@ frontend http-in
 # Backends
 {% for host in groups['backend'] %}
 backend {{ host }}-backend
-    server {{ host }} {{ hostvars[host]['ansible_host'] }}:{{ hostvars[host]['port'] }}
+    {% if hostvars[host]['elb_name'] == "" %}
+    #server frontend frontend:80 still point to frontend 
+    server {{ host }} {{ hostvars[host]['ansible_host'] }}:80
+    {% else %}
+    #now we point to ELBs
+    #server xxx_elb xxx_elb:80
+    server {{ hostvars[host]['elb_name'] }} {{ hostvars[host]['elb'] }}:80
+    {% endif %}
 {% endfor %}
+
+#{% for host in groups['backend'] %}
+#backend {{ host }}-backend
+#    server {{ host }} {{ hostvars[host]['ansible_host'] }}:{{ hostvars[host]['port'] }}
+#{% endfor %}
 
 
