@@ -92,6 +92,7 @@ discounts_elb_id=$(terraform output -json discounts_elb_id | jq -r)
 items_elb_id=$(terraform output -json items_elb_id | jq -r)
 
 private_subnet_id=$(terraform output -json private_subnet_id | jq -r)
+private_security_group_name=$(terraform output -json private_security_group_name | jq -r)
 
 echo "#"
 echo "#"
