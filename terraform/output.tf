@@ -58,5 +58,5 @@ output "private_subnet_id" {
 }
 
 output "private_security_group_name" {
-  value = aws_security_group.security_group["private_security_group"].name
+  value = aws_security_group.security_group["private-security-group"].name
 }
