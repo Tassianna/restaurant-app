@@ -16,7 +16,7 @@ resource "aws_autoscaling_group" "autoscaling_group" {
 
   tag {
     key                 = "Name"
-    value               = "Auto-scaled backend"
+    value               = "Auto-scaled ${each.key}"
     propagate_at_launch = true
   }
 }

@@ -4,7 +4,7 @@ variable "key_name" {
 
 ######### CLI Input variables
 
-variable "private_security_group_name" {
+variable "private_security_group_id" {
   type = string
 }
 

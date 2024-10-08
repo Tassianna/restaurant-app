@@ -12,7 +12,12 @@
         path: "/var/lib/dpkg/lock-frontend"
       become: true
       tags: apt
-   
+
+    - name: Ensure Ansible is installed
+      apt:
+        name: ansible
+        state: present
+        update_cache: yes
 
     - name: Clone the Git repository
       git:
