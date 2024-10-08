@@ -51,7 +51,7 @@ security_groups = {
         from_port   = 3000
         to_port     = 3000
         protocol    = "tcp"
-        cidr_blocks = false
+        cidr_blocks = true
       }
     }
   }

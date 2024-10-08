@@ -15,9 +15,15 @@ resource "aws_launch_template" "launch_template" {
   image_id      = each.value.id # <-- this needs to be snapshot image 
   key_name      = var.key_name
   
-  user_data = <<-EOF
-        #!/bin/bash
-        cd ./restaurant-app
-        docker compose up -d
-        EOF
+  # Base64 encode the user_data script
+  #still doesnt run docker compose up..
+  user_data = base64encode(<<-EOF
+    #!/bin/bash
+    if [ ! -f /var/lib/cloud/instance/boot-finished ]; then
+    # Your setup script here
+    cd /path/to/restaurant-app
+    sudo docker compose up -d
+    fi
+    EOF
+  )
 }

@@ -36,8 +36,8 @@ frontend http-in
 {% for host in groups['backend'] %}
 backend {{ host }}-backend
     {% if hostvars[host]['elb_name'] == "" %}
-    #server frontend frontend:80 still point to frontend 
-    server {{ host }} {{ hostvars[host]['ansible_host'] }}:80
+    #server frontend frontend:3000 still point to frontend 
+    server {{ host }} {{ hostvars[host]['ansible_host'] }}:3000
     {% else %}
     #now we point to ELBs
     #server xxx_elb xxx_elb:80
