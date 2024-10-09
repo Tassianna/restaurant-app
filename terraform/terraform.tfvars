@@ -185,19 +185,19 @@ key_name      = "london_key"
 elbs = {
   auth-elb = {
     security_groups = "auth_elb_sg"
-    subnets = "private_subnet"
+    subnets = "public_subnet"
     cross_zone_load_balancing = false
     port = 3001
   }
   items-elb = {
     security_groups = "items_elb_sg"
-    subnets = "private_subnet"
+    subnets = "public_subnet"
     cross_zone_load_balancing = false
     port = 3003
   }
   discounts-elb = {
     security_groups = "discounts_elb_sg"
-    subnets = "private_subnet"
+    subnets = "public_subnet"
     cross_zone_load_balancing = false
     port = 3002
   }
