@@ -17,5 +17,20 @@ resource "aws_launch_template" "launch_template" {
   
   # Base64 encode the user_data script
   #still doesnt run docker compose up..
-  user_data = base64encode(file("${path.module}/template-startup/start-up.sh"))
+  # user_data = base64encode(file("./restaurant-app/scaling-terraform/template-startup/start-up.sh"))
+  user_data = base64encode(<<-EOF
+    #!/bin/bash
+    echo "start"
+    # Wait for Docker service to be fully up
+    while ! systemctl is-active --quiet docker; do
+        echo "Waiting for Docker to start..."
+        sleep 5
+    done
+
+    cd ~/restaurant-app
+    sudo docker compose up
+
+    echo "Docker containers started."
+  EOF
+  )
 }
