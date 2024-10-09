@@ -67,6 +67,7 @@ variable "elbs"{
     subnets = string
     cross_zone_load_balancing = bool
     port = number
+    path = string
   }))
 }
 
