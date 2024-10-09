@@ -95,7 +95,7 @@ private_subnet_id=$(terraform output -json private_subnet_id | jq -r)
 private_security_group_id=$(terraform output -json private_security_group_id | jq -r)
 
 cd ..
-echo > ./automate_destroy.sh <<EOF
+cat > ./automate_destroy.sh <<EOF
 #!/bin/bash
 cd ./scaling-terraform
 terraform destroy -var="private_security_group_id=$private_security_group_id" -var="private_subnet_id=$private_subnet_id"
