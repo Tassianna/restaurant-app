@@ -91,3 +91,7 @@
     files: 
       - docker-compose.yml
 
+- name: Clean up Cloud init for Autoscaled instances #Custom AMIs need this to run user_data on init
+  shell: sudo cloud-init clean
+  become: true
+
