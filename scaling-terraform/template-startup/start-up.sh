@@ -7,7 +7,7 @@ while ! systemctl is-active --quiet docker; do
     sleep 5
 done
 
-cd ~/restaurant-app
+cd /home/ubuntu/restaurant-app
 sudo docker compose up
 
 echo "Docker containers started."
