@@ -3,6 +3,9 @@
   hosts: maintenance
   become: yes  # Use sudo
   tasks:
+    # - name: Wait for apt to be available
+    #   pause:
+    #     seconds: 60  # Adjust the number of seconds based on your needs
     #
     # from @antonioribeiro on https://github.com/ansible/ansible/issues/51663
     # To prevent frontend lock error blocking ansible from running playbook in ubuntu
@@ -12,6 +15,14 @@
     #     path: "/var/lib/dpkg/lock-frontend"
     #   become: true
     #   tags: apt
+    - name: Ensure apt is ready before installing Ansible
+      command: fuser -v /var/lib/dpkg/lock-frontend  # Check if the lock is being used
+      register: result
+      retries: 10  # Number of retries
+      delay: 10  # Wait time between retries (in seconds)
+      until: result.rc != 0  # Continue looping until the lock is free
+      ignore_errors: yes  # Ignore errors to avoid breaking the playbook
+      changed_when: false  # Prevent this task from marking the playbook as changed
 
     - name: Ensure Ansible is installed
       apt:

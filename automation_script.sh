@@ -126,12 +126,17 @@ echo "# Step 4: Run ansible_maintenance playbook"
 echo "."
 echo "."
 echo "."
+
 echo "# waiting for aws to initialise ec2 completely before running ansible" 
-sleep 40  
+while ! ssh -i $LOCAL_KEY -o "StrictHostKeyChecking=no" ubuntu@$maintenance_ip "echo EC2 is ready"; do
+  echo "Waiting for EC2 instance to initialize..."
+  sleep 10
+done 
+
 # go back to restaurant-app folder
 cd ansible_maintenance
 pwd
-ansible-playbook -i hosts main.yml --extra-vars "local_key=$LOCAL_KEY frontend=$frontend_ip items=$items_service_ip auth=$auth_service_ip discounts=$discounts_service_ip haproxy=$haproxy_ip auth_elb=$auth_elb_dns discounts_elb=$discounts_elb_dns items_elb=$items_elb_dns"
+ansible-playbook -i hosts main.yml --extra-vars "local_key=$LOCAL_KEY frontend=$frontend_ip items=$items_service_ip auth=$auth_service_ip discounts=$discounts_service_ip haproxy=$haproxy_ip auth_elb=$auth_elb_dns discounts_elb=$discounts_elb_dns items_elb=$items_elb_dns" || { echo "Maintenance Ansible failed to complete! Exiting."; exit 1; }
 
 echo "."
 echo "."
