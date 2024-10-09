@@ -14,7 +14,7 @@ resource "aws_elb" "elb" {
     unhealthy_threshold = 2
     timeout = 3
     interval = 30
-    target = "HTTP:${each.value.port}/"
+    target = "HTTP:${each.value.port}${each.value.path}" #http:3001/api/auth
   }
 
   listener {
