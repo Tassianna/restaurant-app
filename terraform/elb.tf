@@ -14,7 +14,7 @@ resource "aws_elb" "elb" {
     unhealthy_threshold = 2
     timeout = 3
     interval = 30
-    target = "HTTP:80/"
+    target = "HTTP:${each.value.port}/"
   }
 
   listener {
@@ -40,7 +40,7 @@ resource "aws_security_group" "elb_sg" {
       from_port   = ingress.value.from_port
       to_port     = ingress.value.to_port
       protocol    = ingress.value.protocol
-      cidr_blocks = ["0.0.0.0/0"]
+      cidr_blocks = aws_subnet.subnet["public_subnet"].cidr_block
     }
   }
   egress {

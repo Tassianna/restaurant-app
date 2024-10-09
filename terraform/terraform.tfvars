@@ -232,11 +232,13 @@ elb_sg = {
         from_port   = 22
         protocol    = "tcp"
         to_port     = 22
+
       }
       allow_http_traffic = {
         from_port   = 80
         to_port     = 80
         protocol    = "tcp"
+
       }
       allow_tcp_auth_traffic = {
         from_port   = 3002
