@@ -53,6 +53,24 @@ security_groups = {
         protocol    = "tcp"
         cidr_blocks = true
       }
+      allow_tcp_items_traffic = {
+        from_port   = 3003
+        to_port     = 3003
+        protocol    = "tcp"
+        cidr_blocks = true
+      }
+      allow_tcp_auth_traffic = {
+        from_port   = 3001
+        to_port     = 3001
+        protocol    = "tcp"
+        cidr_blocks = true
+      }
+      allow_tcp_discounts_traffic = {
+        from_port   = 3002
+        to_port     = 3002
+        protocol    = "tcp"
+        cidr_blocks = true
+      }
     }
   }
 

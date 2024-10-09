@@ -51,3 +51,10 @@ resource "aws_security_group" "elb_sg" {
   }
   for_each = var.elb_sg
 }
+
+resource "aws_proxy_protocol_policy" "proxy_http" {
+  for_each = var.aws_elb.elb
+
+  load_balancer  = each.value.name
+  instance_ports = ["80"]
+}
