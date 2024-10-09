@@ -15,14 +15,22 @@
     #     path: "/var/lib/dpkg/lock-frontend"
     #   become: true
     #   tags: apt
-    - name: Ensure apt is ready before installing Ansible
-      command: fuser -v /var/lib/dpkg/lock-frontend  # Check if the lock is being used
-      register: result
-      retries: 10  # Number of retries
-      delay: 10  # Wait time between retries (in seconds)
-      until: result.rc != 0  # Continue looping until the lock is free
-      ignore_errors: yes  # Ignore errors to avoid breaking the playbook
-      changed_when: false  # Prevent this task from marking the playbook as changed
+    - name: Wait until apt is ready before installing Ansible
+      shell: |
+        while fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1; do
+          echo "Waiting for dpkg lock to be released..."
+          sleep 10
+        done
+      retries: 12  # Retry 12 times (with increasing wait)
+      delay: 10  # Initial delay between retries in seconds
+      register: apt_lock_check
+      until: apt_lock_check.rc == 0
+      ignore_errors: true
+
+    - name: Optional: Kill stuck apt process if it's still running (use with caution)
+      shell: "kill -9 $(fuser /var/lib/dpkg/lock-frontend 2>/dev/null | awk '{print $2}')"
+      when: apt_lock_check.rc != 0
+      ignore_errors: true
 
     - name: Ensure Ansible is installed
       apt:

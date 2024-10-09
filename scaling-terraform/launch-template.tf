@@ -17,5 +17,5 @@ resource "aws_launch_template" "launch_template" {
   
   # Base64 encode the user_data script
   #still doesnt run docker compose up..
-  user_data = base64encode("/restaurant-app/template-startup/startup.sh")
+  user_data = base64encode("./restaurant-app/template-startup/startup.sh")
 }
