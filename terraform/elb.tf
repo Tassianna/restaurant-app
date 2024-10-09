@@ -40,7 +40,7 @@ resource "aws_security_group" "elb_sg" {
       from_port   = ingress.value.from_port
       to_port     = ingress.value.to_port
       protocol    = ingress.value.protocol
-      cidr_blocks = [aws_subnet.subnet["private_subnet"].cidr_block]
+      cidr_blocks = [aws_subnet.subnet["public_subnet"].cidr_block]
     }
   }
   egress {
@@ -53,7 +53,7 @@ resource "aws_security_group" "elb_sg" {
 }
 
 resource "aws_proxy_protocol_policy" "proxy_http" {
-  for_each = var.aws_elb.elb
+  for_each = aws_elb.elb
 
   load_balancer  = each.value.name
   instance_ports = ["80"]

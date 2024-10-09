@@ -25,7 +25,7 @@ variable "security_groups" {
       from_port   = number
       to_port     = number
       protocol    = string
-      cidr_blocks = bool
+      cidr_blocks = string
     }))
   }))
 }

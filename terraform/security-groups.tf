@@ -14,7 +14,8 @@ resource "aws_security_group" "security_group" {
       to_port     = ingress.value.to_port
       protocol    = ingress.value.protocol
       cidr_blocks = [
-        ingress.value.cidr_blocks == true ? "0.0.0.0/0" : aws_subnet.subnet["public_subnet"].cidr_block]
+        ingress.value.cidr_blocks == "all" ? "0.0.0.0/0" : ingress.value.cidr_blocks == "public" ? aws_subnet.subnet["public_subnet"].cidr_block: aws_subnet.subnet["private_subnet"].cidr_block
+      ]
     }
   }
 

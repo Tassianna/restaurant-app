@@ -31,45 +31,45 @@ security_groups = {
         from_port   = 80
         to_port     = 80
         protocol    = "tcp"
-        cidr_blocks = true
+        cidr_blocks = "all"
       }
 
       allow_ssh_traffic = {
         from_port   = 22
         to_port     = 22
         protocol    = "tcp"
-        cidr_blocks = true
+        cidr_blocks = "all"
       }
 
       allow_https_traffic = {
         from_port   = 443
         to_port     = 443
         protocol    = "tcp"
-        cidr_blocks = true
+        cidr_blocks = "all"
       }
       allow_tcp_frontend_traffic = {
         from_port   = 3000
         to_port     = 3000
         protocol    = "tcp"
-        cidr_blocks = true
+        cidr_blocks = "all"
       }
       allow_tcp_items_traffic = {
         from_port   = 3003
         to_port     = 3003
         protocol    = "tcp"
-        cidr_blocks = true
+        cidr_blocks = "all"
       }
       allow_tcp_auth_traffic = {
         from_port   = 3001
         to_port     = 3001
         protocol    = "tcp"
-        cidr_blocks = true
+        cidr_blocks = "all"
       }
       allow_tcp_discounts_traffic = {
         from_port   = 3002
         to_port     = 3002
         protocol    = "tcp"
-        cidr_blocks = true
+        cidr_blocks = "all"
       }
     }
   }
@@ -78,7 +78,7 @@ security_groups = {
     desc = "security group for public subnet"
     ingress = {
       allow_ssh_traffic = {
-        cidr_blocks = false
+        cidr_blocks = "public"
         from_port   = 22
         protocol    = "tcp"
         to_port     = 22
@@ -87,25 +87,25 @@ security_groups = {
         from_port   = 80
         to_port     = 80
         protocol    = "tcp"
-        cidr_blocks = false
+        cidr_blocks = "private"
       }
       allow_tcp_auth_traffic = {
         from_port   = 3001
         to_port     = 3001
         protocol    = "tcp"
-        cidr_blocks = false
+        cidr_blocks = "private"
       }
       allow_tcp_discounts_traffic = {
         from_port   = 3002
         to_port     = 3002
         protocol    = "tcp"
-        cidr_blocks = false
+        cidr_blocks = "private"
       }
       allow_tcp_items_traffic = {
         from_port   = 3003
         to_port     = 3003
         protocol    = "tcp"
-        cidr_blocks = false
+        cidr_blocks = "private"
       }
     }
   }
