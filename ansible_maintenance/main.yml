@@ -27,7 +27,7 @@
       until: apt_lock_check.rc == 0
       ignore_errors: true
 
-    - name: Optional: Kill stuck apt process if it's still running (use with caution)
+    - name: Optional - Kill stuck apt process if it's still running (use with caution)
       shell: "kill -9 $(fuser /var/lib/dpkg/lock-frontend 2>/dev/null | awk '{print $2}')"
       when: apt_lock_check.rc != 0
       ignore_errors: true
