@@ -15,9 +15,6 @@ resource "aws_launch_template" "launch_template" {
   image_id      = each.value.id # <-- this needs to be snapshot image 
   key_name      = var.key_name
   
-  # Base64 encode the user_data script
-  #still doesnt run docker compose up..
-  # user_data = base64encode(file("./restaurant-app/scaling-terraform/template-startup/start-up.sh"))
   user_data = base64encode(<<-EOF
     #!/bin/bash
     echo "start"
@@ -27,7 +24,7 @@ resource "aws_launch_template" "launch_template" {
         sleep 5
     done
 
-    cd ~/restaurant-app
+    cd /home/ubuntu/restaurant-app
     sudo docker compose up
 
     echo "Docker containers started."
