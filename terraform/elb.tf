@@ -5,7 +5,6 @@ resource "aws_elb" "elb" {
   ]
   subnets = [
     aws_subnet.subnet[each.value.subnets].id,
-   
   ]
   cross_zone_load_balancing   = each.value.cross_zone_load_balancing
 
@@ -53,8 +52,11 @@ resource "aws_security_group" "elb_sg" {
 }
 
 resource "aws_proxy_protocol_policy" "proxy_http" {
-  for_each = aws_elb.elb
+  for_each = var.elbs
+  depends_on = [
+    aws_elb.elb
+  ]
 
-  load_balancer  = each.value.name
-  instance_ports = ["80"]
+  load_balancer  = each.key
+  instance_ports = [each.value.port]
 }

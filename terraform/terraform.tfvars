@@ -75,7 +75,7 @@ security_groups = {
   }
 
   private-security-group = {
-    desc = "security group for public subnet"
+    desc = "security group for private subnet"
     ingress = {
       allow_ssh_traffic = {
         cidr_blocks = "public"
@@ -93,19 +93,19 @@ security_groups = {
         from_port   = 3001
         to_port     = 3001
         protocol    = "tcp"
-        cidr_blocks = "private"
+        cidr_blocks = "public"
       }
       allow_tcp_discounts_traffic = {
         from_port   = 3002
         to_port     = 3002
         protocol    = "tcp"
-        cidr_blocks = "private"
+        cidr_blocks = "public"
       }
       allow_tcp_items_traffic = {
         from_port   = 3003
         to_port     = 3003
         protocol    = "tcp"
-        cidr_blocks = "private"
+        cidr_blocks = "public"
       }
     }
   }
@@ -203,21 +203,21 @@ key_name      = "london_key"
 elbs = {
   auth-elb = {
     security_groups = "auth_elb_sg"
-    subnets = "private_subnet"
+    subnets = "public_subnet"
     cross_zone_load_balancing = false
     port = 3001
     path = "/api/auth"
   }
   items-elb = {
     security_groups = "items_elb_sg"
-    subnets = "private_subnet"
+    subnets = "public_subnet"
     cross_zone_load_balancing = false
     port = 3003
     path = "/api/items"
   }
   discounts-elb = {
     security_groups = "discounts_elb_sg"
-    subnets = "private_subnet"
+    subnets = "public_subnet"
     cross_zone_load_balancing = false
     port = 3002
     path = "/api/discounts"
