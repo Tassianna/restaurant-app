@@ -4,7 +4,7 @@ resource "aws_elb" "elb" {
     aws_security_group.elb_sg[each.value.security_groups].id
   ]
   subnets = [
-    aws_subnet.subnet[each.value.subnets].id,
+    aws_subnet.subnet["public_subnet"].id,aws_subnet.subnet["private_subnet"].id,
   ]
   cross_zone_load_balancing   = each.value.cross_zone_load_balancing
 

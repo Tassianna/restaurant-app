@@ -26,5 +26,8 @@ resource "aws_autoscaling_attachment" "example" {
 
   autoscaling_group_name = "${each.key}_sg"
   elb                    = each.value.loadbalancer
+  depends_on = [
+    aws_autoscaling_group.autoscaling_group
+  ]
 }
 

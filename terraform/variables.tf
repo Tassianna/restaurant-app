@@ -64,7 +64,6 @@ variable "key_name" {
 variable "elbs"{
   type = map (object({
     security_groups = string
-    subnets = string
     cross_zone_load_balancing = bool
     port = number
     path = string
