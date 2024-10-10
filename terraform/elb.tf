@@ -42,12 +42,26 @@ resource "aws_security_group" "elb_sg" {
       cidr_blocks = [aws_subnet.subnet["public_subnet"].cidr_block]
     }
   }
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  
   egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  egress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   for_each = var.elb_sg
 }
 

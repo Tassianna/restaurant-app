@@ -34,7 +34,7 @@ frontend http-in
 
 # Backends
 {% for host in groups['backend'] %}
-backend {{ host }}-backend
+    backend {{ host }}-backend
     {% if hostvars[host]['elb_name'] == "" %}
     #server frontend frontend:3000 still point to frontend 
     server {{ host }} {{ hostvars[host]['ansible_host'] }}:3000
