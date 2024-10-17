@@ -1,0 +1,3 @@
+resources:
+- backend-deployment.yml
+- client-deployment.yml
