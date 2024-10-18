@@ -14,10 +14,12 @@ spec:
     spec:
       containers:
       - name: client
-        image: tassianna/restaurant-app:client
+        image: tassianna/restaurant-app:client-newvars
         ports:
         - containerPort: 5173
-
+        env:
+        - name: VITE_SERVER_URL
+          value: "http://backend-service:6001"
 ---
 apiVersion: v1
 kind: Service

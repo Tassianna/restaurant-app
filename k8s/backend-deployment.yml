@@ -14,9 +14,22 @@ spec:
     spec:
       containers:
       - name: backend
-        image: tassianna/restaurant-app:backend
+        image: tassianna/restaurant-app:backend-newvars
         ports:
         - containerPort: 6001
+        env:
+        - name: SECRET
+          value: "MySecret1!"
+        - name: MONGODB_URI
+          value: "mongodb://dionamite:Dionamite1%21@mongo-0.mongo-service:27017,mongo-1.mongo-service:27017,mongo-2.mongo-service:27017/flor?replicaSet=rs0"
+        - name: CLOUD_NAME
+          value: "drsjloigq"
+        - name: CLOUD_API_KEY
+          value: "926793658896175"
+        - name: CLOUD_API_SECRET
+          value: "5QhoDhOiODpETRSYUrRYDzu5tv0"
+        - name: PORT
+          value: "6001"
 
 ---
 apiVersion: v1
