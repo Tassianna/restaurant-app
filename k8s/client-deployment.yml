@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: client
-        image: tassianna/restaurant-app:client-newvars
+        image: tassianna/restaurant-app:client-curl
         ports:
         - containerPort: 5173
         env:
